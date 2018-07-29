@@ -236,7 +236,10 @@ def compute_head_information(attributes):
     if len(mention_subtree.leaves()) == len(attributes["tokens"]):
         head_tree = head_finder.get_head(mention_subtree)
         head_index = get_head_index(head_tree, mention_subtree.pos())
-        head = [head_tree[0]]
+        if isinstance(head_tree[0]):
+            head = [head_tree[0]]
+        else:
+            head = head_tree.leaves()
 
     in_mention_span = spans.Span(head_index, head_index)
 
