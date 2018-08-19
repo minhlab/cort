@@ -74,7 +74,9 @@ class Corpus:
             current_document += line
 
         document_as_strings.append(current_document)
-
+        from tqdm import tqdm
+        document_as_strings = tqdm(document_as_strings, unit="doc", 
+                                   desc="Reading corpus %s" %description)
         return Corpus(description, sorted([from_string(doc) for doc in
                                            document_as_strings]))
 
@@ -86,7 +88,10 @@ class Corpus:
         Args:
             file (file): The file the corpus should be written to.
         """
-        for document in self.documents:
+        from tqdm import tqdm
+        documents = tqdm(self.documents, unit="doc", 
+                         desc="Writing corpus %s" %self.description)
+        for document in documents:
             file.write(document.get_string_representation())
 
     def write_antecedent_decisions_to_file(self, file):
