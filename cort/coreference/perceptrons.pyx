@@ -109,6 +109,14 @@ cdef class Perceptron:
                     weights_for_label = numpy.array(weights[label])
                     self.weights[label] = weights_for_label
 
+        # fix error when input has only '+' but not '-'
+        if '-' not in self.priors:
+            self.priors['-'] = 0.0
+        if '-' not in self.weights:
+            weights_for_label = array.array("d",
+                                            (0.0 for k in range(2**24)))
+            self.weights['-'] = weights_for_label
+
     def fit(self, substructures, arc_information):
         """Learn weights from data.
 
