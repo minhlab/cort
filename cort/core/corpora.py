@@ -85,7 +85,7 @@ class Corpus:
         Args:
             file (file): The file the corpus should be written to.
         """
-        for document in documents:
+        for document in self.documents:
             file.write(document.get_string_representation())
 
     def write_antecedent_decisions_to_file(self, file):
