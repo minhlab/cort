@@ -88,9 +88,6 @@ class Corpus:
         Args:
             file (file): The file the corpus should be written to.
         """
-        from tqdm import tqdm
-        documents = tqdm(self.documents, unit="doc", 
-                         desc="Writing corpus %s" %self.description)
         for document in documents:
             file.write(document.get_string_representation())
 
