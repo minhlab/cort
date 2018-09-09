@@ -1,7 +1,6 @@
 """ Extract instances and features from a corpus. """
 
 import array
-import multiprocessing
 import sys
 
 import mmh3
@@ -106,17 +105,17 @@ class InstanceExtractor:
         for doc in corpus:
             id_to_doc_mapping[doc.identifier] = doc
 
-        pool = multiprocessing.Pool(maxtasksperchild=1)
-
-        if sys.version_info[0] == 2:
-            results = pool.map(unwrap_extract_doc,
-                               zip([self] * len(corpus.documents),
-                                   corpus.documents))
-        else:
-            results = pool.map(self._extract_doc, corpus.documents)
-
-        pool.close()
-        pool.join()
+        # The original version use multiprocessing Pool but it leads to an error 
+        # during de-serialization ("ValueError: Can not insert a subtree that 
+        # already has a parent.")
+        # We don't use multiprocessing here but will parallelize the training
+        # of multiple models later on
+        documents = corpus.documents
+        if len(documents) >= 500:
+            from tqdm import tqdm
+            documents = tqdm(documents, unit="document", mininterval=1)
+        results = map(unwrap_extract_doc,
+                      zip([self] * len(corpus.documents), documents))
 
         num_labels = len(self.labels)
 

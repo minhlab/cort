@@ -74,6 +74,9 @@ class Corpus:
             current_document += line
 
         document_as_strings.append(current_document)
+        if len(document_as_strings) >= 500:
+            from tqdm import tqdm
+            document_as_strings = tqdm(document_as_strings, mininterval=1, unit='document')
         return Corpus(description, sorted([from_string(doc) for doc in
                                            document_as_strings]))
 
