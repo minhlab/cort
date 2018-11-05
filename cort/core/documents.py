@@ -374,7 +374,7 @@ class CoNLLDocument(Document):
                 document_as_string (str): A representation of a document in
                     the CoNLL format.
             """
-        identifier = " ".join(document_as_string.split("\n")[0].split(" ")[2:])
+        identifier = " ".join(document_as_string.split("\n")[0].split()[2:])
 
         self.document_table = CoNLLDocument.__string_to_table(
             document_as_string)
