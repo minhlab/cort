@@ -111,9 +111,6 @@ class InstanceExtractor:
         # We don't use multiprocessing here but will parallelize the training
         # of multiple models later on
         documents = corpus.documents
-        if len(documents) >= 500:
-            from tqdm import tqdm
-            documents = tqdm(documents, unit="document", mininterval=1)
         results = map(unwrap_extract_doc,
                       zip([self] * len(corpus.documents), documents))
 

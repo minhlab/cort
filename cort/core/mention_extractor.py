@@ -18,8 +18,23 @@ def extract_system_mentions(document, filter_mentions=True):
     """
     system_mentions = [mentions.Mention.from_document(m.span, document)
                        for m in document.annotated_mentions]
+    
+    seen = set()
+
+    # update set id and whether it is the first mention in gold entity
+    for mention in system_mentions:
+        mention.attributes["set_id"] = None
+
+        annotated_set_id = mention.attributes["annotated_set_id"]
+
+        mention.attributes["first_in_gold_entity"] = \
+            annotated_set_id not in seen
+
+        seen.add(annotated_set_id)
+
     system_mentions = [mentions.Mention.dummy_from_document(document)] \
         + system_mentions
+
     return system_mentions
 
 def post_process_by_head_pos(system_mentions):

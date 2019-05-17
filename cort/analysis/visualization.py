@@ -191,8 +191,9 @@ class Visualizer:
         webbrowser.open_new_tab("file://" + abs_path)
 
     def __generate_html_for_errors(self, document, mentions):
+        speaker = document.speakers[0]
         document_html = "\n\t\t\t<ol class=\"text\">\n" \
-                        "\t\t\t\t<li class=\"sentence\">"
+                        "\t\t\t\t<li class=\"sentence\">%s: " %speaker
 
         self.navi["gold"] = "\n\t\t\t\t<div class=\"goldNavi\">" \
                             "<h3>Reference Entities</h3>" \
@@ -304,8 +305,9 @@ class Visualizer:
             if document.get_sentence_id_and_span(token_span) is None or \
                     sentence_span != document.get_sentence_id_and_span(
                             token_span)[1]:
+                speaker = document.speakers[index]
                 mention_text = "</li>\n" \
-                               "\t\t\t\t<li class=\"sentence\">" + mention_text
+                               "\t\t\t\t<li class=\"sentence\">%s: %s" %(speaker, mention_text)
 
                 sentence_id, sentence_span = document.get_sentence_id_and_span(token_span)
 
