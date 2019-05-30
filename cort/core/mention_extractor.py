@@ -22,6 +22,7 @@ def extract_system_mentions(document, filter_mentions=True):
     seen = set()
 
     # update set id and whether it is the first mention in gold entity
+    # this is used during the training of "latent" and "tree" models
     for mention in system_mentions:
         mention.attributes["set_id"] = None
 

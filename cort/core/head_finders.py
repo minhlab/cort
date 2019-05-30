@@ -219,8 +219,9 @@ class HeadFinder:
         elif ner_type == "NONE":
             start_regex = re.compile("NN(S)?|NNP(S)?|CD")
         else:
-            logger.warning("No head adjustment rule defined for NER class " +
-                           ner_type + ".")
+            # I need to disable this warning because altered documents are full of UNKN tags
+            # logger.warning("No head adjustment rule defined for NER class " +
+            #                ner_type + ".")
             return in_mention_span_old_head, old_head
 
         head_start = -1
