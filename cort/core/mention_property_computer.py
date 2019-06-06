@@ -239,7 +239,7 @@ def compute_head_information(attributes):
         if isinstance(head_tree[0], str):
             head = [head_tree[0]]
         else:
-            head = head_tree.leaves()
+            head = head_tree.leaves()[:1]
 
     in_mention_span = spans.Span(head_index, head_index)
 
